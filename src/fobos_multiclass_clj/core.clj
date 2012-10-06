@@ -1,7 +1,7 @@
 (ns fobos-multiclass-clj.core
   (:use [clojure.string :only (split)])
-  (:use [fobos_clj.fobos])
-  (:use [fobos_clj.svm]))
+  (:use [fobos-multiclass-clj.multiclass
+         :only (multiclass-examples argmax-label get-models)]))
 
 (defn get-accuracy [gold prediction]
   (assert (= (count gold) (count prediction)))
