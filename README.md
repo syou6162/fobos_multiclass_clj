@@ -6,7 +6,7 @@ Multiclass classifier based on FOBOS.
 
 FIXME
 
-```
+```sh
 $ wget http://www.csie.ntu.edu.tw/\~cjlin/libsvmtools/datasets/multiclass/news20.bz2
 $ wget http://www.csie.ntu.edu.tw/\~cjlin/libsvmtools/datasets/multiclass/news20.t.bz2
 
