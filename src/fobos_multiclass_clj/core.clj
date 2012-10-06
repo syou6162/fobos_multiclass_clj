@@ -75,20 +75,20 @@
                 [label fvs])))
        (split-at 16000)))
 
-(defn train-model [examples init-weight max-iter eta lambda]
+(defn train-model [examples max-iter eta lambda]
   (let [init-model (update-weight
-                    (fobos_clj.svm.SVM. examples init-weight eta lambda) 0)]
+                    (fobos_clj.svm.SVM. examples eta lambda) 0)]
     (loop [iter 1
            model init-model]
       (if (= iter max-iter)
         model
         (recur (inc iter) (update-weight model iter))))))
 
-(defn get-models [training-examples init-weight max-iter eta lambda]
+(defn get-models [training-examples max-iter eta lambda]
   (reduce (fn [result [class examples]]
             (assoc result
               class
-              (train-model examples init-weight max-iter eta lambda)))
+              (train-model examples max-iter eta lambda)))
           {}
           training-examples))
 
@@ -101,11 +101,10 @@
   (let [filename "/Users/yasuhisa/Desktop/fobos_multiclass_clj/all.txt"
         [temp-training-examples test-examples] (get-train-and-test-data filename)
         training-examples (multiclass-examples temp-training-examples)
-        init-weight {}
         iter 10
         eta 1.0
         lambda 1.0
-        models (get-models training-examples init-weight iter eta lambda)
+        models (get-models training-examples iter eta lambda)
 
         gold (map first test-examples)
         prediction (map #(argmax-label models (second %)) test-examples)
