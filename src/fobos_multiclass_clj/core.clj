@@ -32,7 +32,7 @@
         training-examples (multiclass-examples temp-training-examples)
         iter 10
         eta 1.0
-        lambda 1.0
+        lambda 0.005
         models (get-models training-examples iter eta lambda)
 
         gold (map first test-examples)
