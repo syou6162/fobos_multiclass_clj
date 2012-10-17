@@ -1,4 +1,4 @@
-(defproject fobos_multiclass_clj "0.1.0-SNAPSHOT"
+(defproject fobos_multiclass_clj "0.1.1"
   :description "Multiclass classifier based on FOBOS"
   :url "https://github.com/syou6162/fobos_multiclass_clj"
   :license {:name "Eclipse Public License"
