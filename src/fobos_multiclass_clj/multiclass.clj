@@ -39,15 +39,14 @@
 (defn get-models [training-examples max-iter eta lambda]
   (let [train-model (fn [examples max-iter eta lambda]
                       (let [init-model (update-weight
-                                        (fobos_clj.svm.SVM. examples {} eta lambda) 0)]
+                                        (make-SVM examples eta lambda))]
                         (loop [iter 1
                                model init-model]
                           (if (= iter max-iter)
                             model
-                            (recur (inc iter) (update-weight model iter))))))]
-    (reduce (fn [result [class examples]]
-              (assoc result
-                class
-                (train-model examples max-iter eta lambda)))
-            {}
-            training-examples)))
+                            (do
+                              (println "Iter: " iter (count (:weight model)))
+                              (recur (inc iter) (update-weight model)))))))]
+    (into {} (pmap (fn [[class examples]]
+                     [class (train-model examples max-iter eta lambda)])
+                   training-examples))))
