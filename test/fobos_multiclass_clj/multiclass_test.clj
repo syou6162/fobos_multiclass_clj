@@ -60,3 +60,17 @@
            (set (map first (get-models
                             (multiclass-examples training-example)
                             max-iter eta lambda)))))))
+
+(deftest get-label-scores-test
+  (let [training-example [["A" [[1 1] [1 1]]]
+                          ["B" [[2 1] [3 1]]]
+                          ["A" [[2 1]]]]
+        test-example [[1 1] [1 1]]
+        max-iter 10
+        eta 1.0
+        lambda 1.0
+        models (get-models
+                (multiclass-examples training-example)
+                max-iter eta lambda)]
+    (is (= (keys (get-label-scores models test-example))
+           '("A" "B")))))

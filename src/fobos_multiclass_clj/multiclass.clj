@@ -50,3 +50,20 @@
     (into {} (pmap (fn [[class examples]]
                      [class (train-model examples max-iter eta lambda)])
                    training-examples))))
+
+(defn get-label-scores [models test-example]
+  (->> models
+       (reduce
+        (fn [result [label svm]]
+          (assoc result label (dotproduct (:weight svm) test-example)))
+        {})))
+
+(defn argmax-label [models test-example]
+  (->> models
+       (reduce
+        (fn [result [label svm]]
+          (assoc result label (dotproduct (:weight svm) test-example)))
+        {})
+       (sort-by second >)
+       (first)
+       (first)))
